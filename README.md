@@ -1,4 +1,4 @@
-# Kong Demo
+# Kong Demo Tutorial
 
 *Note:*
 
@@ -10,6 +10,14 @@
 ```bash
 docker-compose -f docker-compose-kong-oss.yml up -d
 ```
+
+## Configure and use Konga Admin UI for Kong OSS Gateway
+
+When starting Docker Compose, Konga Admin UI (a Open Source Admin UI for Kong) is also deployed. Once started, Konga is reachable using the following URL: 
+
+* http://localhost:1337
+
+When accessing the Konga UI for the first time, you're required to create a Admin user that is used to access Konga UI afterwards. After logging in for the first time, you need to configure the connection to the Kong OSS API Gateway. As Kong Admin API URL use: http://kong:8001.
 
 ## Configure the API artifacts
 
