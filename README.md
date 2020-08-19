@@ -11,7 +11,7 @@
 docker-compose -f docker-compose-kong-oss.yml up -d
 ```
 
-## Configure and use Konga Admin UI for Kong OSS Gateway
+## Tutorial: Configure and use Konga Admin UI for Kong OSS Gateway
 
 When starting Docker Compose, Konga Admin UI (a Open Source Admin UI for Kong) is also deployed. Once started, Konga is reachable using the following URL: 
 
@@ -19,7 +19,9 @@ When starting Docker Compose, Konga Admin UI (a Open Source Admin UI for Kong) i
 
 When accessing the Konga UI for the first time, you're required to create a Admin user that is used to access Konga UI afterwards. After logging in for the first time, you need to configure the connection to the Kong OSS API Gateway. As Kong Admin API URL use: http://kong:8001.
 
-## Configure the API artifacts
+That's all. Now your able to explore and manage Kong configuration using Konga.
+
+## Tutorial: Configure API artifacts
 
 ### Create the API artifacts
 
@@ -73,7 +75,7 @@ http :8000/httpbin-api/v1/blablubb apikey:<generated-api-key>
 http :8001/services/httpbin-svc/plugins name=rate-limiting config:='{"hour":10}'
 ```
 
-## Declarative Kong management with decK
+## Tutorial: Declarative Kong management with decK
 
 * Dump your current Kong configuration
 
@@ -89,8 +91,12 @@ Change something in your API definition
 deck diff
 ```
 
+Review the changes you made to Kong's configuration.
+
 * Sync the local configuration to Kong
 
 ```bash
 deck sync
 ```
+
+After syncing the API changes your local dump and your Gateway configuration are the same. This can be verified by again executing the _sync_ command. 
