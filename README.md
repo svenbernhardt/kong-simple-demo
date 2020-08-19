@@ -3,9 +3,17 @@
 *Note:*
 
 * The following commands assume that Kong is running locally and that the Admin API is available through port 8001
-* Furthermore it is assumed that decK is installed locally
+* Furthermore it is assumed that decK, HTTPie and Docker Compose is installed locally
 
-## Create the API artifacts
+## Start the Kong demo environment
+
+```bash
+docker-compose -f docker-compose-kong-oss.yml up -d
+```
+
+## Configure the API artifacts
+
+### Create the API artifacts
 
 * Create Kong Service
 
@@ -25,7 +33,7 @@ http POST :8001/services/httpbin-svc/routes name=httpbin-route paths:='["/httpbi
 http :8000/httpbin-api/v1/blablubb
 ```
 
-## Add plugins to secure your API services
+### Add plugins to secure your API services
 
 * Add Key-auth plugin
 
