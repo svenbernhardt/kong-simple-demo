@@ -13,7 +13,7 @@ docker-compose -f docker-compose-kong-oss.yml up -d
 
 ## Tutorial: Configure and use Konga Admin UI for Kong OSS Gateway
 
-When starting Docker Compose, Konga Admin UI (a Open Source Admin UI for Kong) is also deployed. Once started, Konga is reachable using the following URL: 
+When starting Docker Compose, Konga Admin UI (a Open Source Admin UI for Kong) is also deployed. Once started, Konga is reachable using the following URL:
 
 * http://localhost:1337
 
@@ -28,7 +28,7 @@ That's all. Now your able to explore and manage Kong configuration using Konga.
 * Create Kong Service
 
 ```bash
-http POST :8001/services name=httpbin-svc protocol=https host=httpbin.org port:=443 path=/anything
+http POST :8001/services name=httpbin-svc url=https://httpbin.org:443/anything
 ```
 
 * Create Kong Route
@@ -51,16 +51,24 @@ http :8000/httpbin-api/v1/blablubb
 http :8001/services/httpbin-svc/plugins name=key-auth
 ```
 
-* Add Consumer for API
+* Add Consumers for API
 
 ```bash
-http :8001/consumers username=httpbin-consumer
+http :8001/consumers username=bob
 ```
 
-* Generate Key for newly added consumer
+```bash
+http :8001/consumers username=alice
+```
+
+* Generate Key for newly added consumers
 
 ```bash
-http POST :8001/consumers/httpbin-consumer/key-auth
+http POST :8001/consumers/bob/key-auth
+```
+
+```bash
+http POST :8001/consumers/alice/key-auth
 ```
 
 * Call to secured service using generated API key
@@ -69,11 +77,20 @@ http POST :8001/consumers/httpbin-consumer/key-auth
 http :8000/httpbin-api/v1/blablubb apikey:<generated-api-key>
 ```
 
+* Patch key-auth plugin to hide API key from upstream service
+
+```bash
+http PATCH :8001/services/httpbin-svc/plugins/<plugin-id> 'config[hide_credentials]:=true' 
+```
+
 * Add rate limiting plugin
 
 ```bash
-http :8001/services/httpbin-svc/plugins name=rate-limiting config:='{"hour":10}'
+http :8001/services/httpbin-svc/plugins name=rate-limiting config:='{"hour":5}'
 ```
+
+* Test to call API with Bobs API key for 6 times and see the last request failing with HTTP response code 429. Afterwards try with Alices API key
+* Rate limit plugin works on cosnumers by default to aggregate the number of calls; this behaviour can be changed in the Plugin configuration (config.limit_by)
 
 ## Tutorial: Declarative Kong management with decK
 
@@ -99,4 +116,4 @@ Review the changes you made to Kong's configuration.
 deck sync
 ```
 
-After syncing the API changes your local dump and your Gateway configuration are the same. This can be verified by again executing the _sync_ command. 
+After syncing the API changes your local dump and your Gateway configuration are the same. This can be verified by again executing the _sync_ command.
