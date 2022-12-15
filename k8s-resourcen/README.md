@@ -1,10 +1,15 @@
 # Kubernetes Resources
 
+*Note:*
+
+* The following commands assume that Kong is running on kubernetes cluster bootstrapped with [k3d-bootstrap-cluster](https://github.com/FabianHardt/k3d-bootstrap-cluster)
+
+
 ## Basic
 
 Basic Infrastructure-Setup without any Kong-Custom-Resource-Definitions (CRDs).
 
-1. Apply all resources on your running kubernetes instance, deployed with kong kubernetes ingress-controller
+1. Apply all basic resources
 
 ```bash
 kubectl apply -f k8s-resources/basics/
