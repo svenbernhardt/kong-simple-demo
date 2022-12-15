@@ -1,0 +1,9 @@
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: "key-auth"
+  namespace: demo
+# config:
+#   hide_credentials: true
+plugin: key-auth

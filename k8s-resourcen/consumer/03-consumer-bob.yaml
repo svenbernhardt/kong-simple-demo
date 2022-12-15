@@ -1,0 +1,19 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: bob
+  namespace: demo
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+username: bob
+credentials:
+- bob-key
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: bob-key
+  namespace: demo
+stringData:
+  key: bob-secret
+  kongCredType: key-auth

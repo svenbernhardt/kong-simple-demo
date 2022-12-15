@@ -1,0 +1,19 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: alice
+  namespace: demo
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+username: alice
+credentials:
+- alice-key
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: alice-key
+  namespace: demo
+stringData:
+  key: alice-secret
+  kongCredType: key-auth
